@@ -69,6 +69,37 @@ corr = numeric_df.corr()
 # Plot correlation matrix
 fig, ax = plt.subplots()
 sns.heatmap(corr, annot=True, fmt=".2f", cmap="coolwarm", ax=ax)
+fig.suptitle("Correlation Matrix", y=1, fontsize=16)  # y controls the vertical position
 st.pyplot(fig)
 
+with col1:
+    fig = px.histogram(df, x="authentication.login_attempts", nbins=20,
+                       title="Login Attempts Distribution",
+                       labels={"authentication.login_attempts": "Login Attempts"})
+    st.plotly_chart(fig)
 
+with col2:
+    fig = px.scatter(df, x="security_metrics.ip_reputation_score", y="network_activity.packet_size",
+                     title="IP Reputation vs Packet Size",
+                     labels={"security_metrics.ip_reputation_score": "IP Reputation Score", 
+                             "network_activity.packet_size": "Packet Size"})
+    st.plotly_chart(fig)
+
+with col1:
+    fig = px.box(df, y="network_activity.duration", 
+                 title="Session Duration Distribution",
+                 labels={"network_activity.duration": "Duration"})
+    st.plotly_chart(fig)
+
+attack_counts = df.groupby(["network_activity.protocol", "security_metrics.attack_detected"]).size().reset_index(name='count')
+with col2:
+    fig = px.bar(attack_counts, x="network_activity.protocol", y="count", color="security_metrics.attack_detected",
+                 title="Attacks Detected per Protocol", 
+                 labels={"network_activity.protocol": "Protocol", "count": "Count", "security_metrics.attack_detected": "Attack Detected"})
+    st.plotly_chart(fig)
+
+with col1:
+    fig = px.area(df, x="session_id", y="network_activity.duration",
+                  title="Session Duration Over Time",
+                  labels={"network_activity.duration": "Duration", "session_id": "Session ID"})
+    st.plotly_chart(fig)
