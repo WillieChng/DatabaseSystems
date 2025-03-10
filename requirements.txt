@@ -1,1 +1,7 @@
 streamlit
+pymongo
+altair
+numpy
+pandas
+plotly
+seaborn
