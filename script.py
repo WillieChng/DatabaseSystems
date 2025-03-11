@@ -8,10 +8,11 @@ db = client["cybersecurity_db"]  # Database name
 collection = db["intrusion_logs"]  # Collection name
 
 # Load the dataset
-file_path = "C:/Users/User/Documents/Documents/Degree/Y2S3/Database Systems/Shitty Ass/cybersecurity_intrusion_data.csv"
+file_path = "cybersecurity_intrusion_data.csv"
 df = pd.read_csv(file_path)
+print(df.head(1))
 
-# Transform relational schema into a document-based format
+#Transform relational schema into a document-based format
 def transform_data(row):
     return {
         "session_id": row["session_id"],
@@ -35,19 +36,21 @@ def transform_data(row):
 
 # Convert DataFrame rows to JSON-like documents
 documents = df.apply(transform_data, axis=1).tolist()
+print(f"Transformed {len(documents)} records into document format")
+print("Sample transformed document:", documents[0])
 
-# Insert data into MongoDB
-collection.insert_many(documents)
-print("Data inserted successfully!")
+# # Insert data into MongoDB
+# collection.insert_many(documents)
+# print("Data inserted successfully!")
 
-# Perform basic analysis
-print("Total number of logs:", collection.count_documents({}))
+# # Perform basic analysis
+# print("Total number of logs:", collection.count_documents({}))
 
-# Count attacks detected
-attack_counts = collection.aggregate([
-    {"$group": {"_id": "$security_metrics.attack_detected", "count": {"$sum": 1}}},
-    {"$sort": {"count": -1}}
-])
-print("Attack detection summary:")
-for attack in attack_counts:
-    print("Detected:" if attack["_id"] == 1 else "Not Detected:", attack["count"])
+# # Count attacks detected
+# attack_counts = collection.aggregate([
+#     {"$group": {"_id": "$security_metrics.attack_detected", "count": {"$sum": 1}}},
+#     {"$sort": {"count": -1}}
+# ])
+# print("Attack detection summary:")
+# for attack in attack_counts:
+#     print("Detected:" if attack["_id"] == 1 else "Not Detected:", attack["count"])
