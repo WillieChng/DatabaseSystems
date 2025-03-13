@@ -1,0 +1,7 @@
+div[data-baseweb="select"] {
+    cursor: pointer;
+}
+
+button {
+    cursor: pointer !important;
+}
