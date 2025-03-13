@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns  # Import Seaborn for advanced plotting
 
 from db_connection import get_db
-from db_utils import fetch_intrusion_logs
+from db_utils import fetch_cyber_detection
 
 # Fx to load external CSS
 def load_css(css_file="styles.css"):
@@ -18,7 +18,7 @@ load_css("styles.css")
 
 st.title("Data visualization")
 
-data = fetch_intrusion_logs()
+data = fetch_cyber_detection()
 
 df = pd.json_normalize(data)
 
