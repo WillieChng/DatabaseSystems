@@ -19,10 +19,11 @@ anomaly_dict = {
 }
 
 st.set_page_config(
+    page_title="Intrusion Prediction",
     page_icon="🛡️",
     layout="wide"
 )
-st.header("Intrusion Detection")
+st.header("Intrusion Prediction 🚨")
 
 # Load external CSS
 def load_css(css_file):

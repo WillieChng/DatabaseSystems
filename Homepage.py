@@ -13,7 +13,7 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("Network Intrusion Insight")
+st.title("Network Intrusion Insight 🔍")
 
 # Function to test MongoDB connection
 def test_mongo_connection(connection_string, db_name):
