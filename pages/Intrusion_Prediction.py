@@ -5,7 +5,7 @@ from datetime import datetime
 
 # Connect to MongoDB
 db = get_db()
-collection = db["intrusion-logs"]
+collection = db["user_incoming_input"]
 
 anomaly_dict = {
     "IRS" : "Low IP Reputation Score",
@@ -84,6 +84,9 @@ if st.button("Submit"):
         },
         "browser": browser_type
     }
+    
+    # Store input in MongoDB
+    collection.insert_one(document)
 
     # Create a placeholder for the spinner
     spinner_placeholder = st.empty()
