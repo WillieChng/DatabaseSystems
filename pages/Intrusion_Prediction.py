@@ -67,6 +67,7 @@ if st.button("Submit"):
     # Create a document based on user inputs
     document = {
         # "session_id": session_id, prob not needed since its randomly generated, but could be useful for tracking
+        "timestamp": datetime.utcnow(),
         "network_activity": {
             "protocol": protocol_type,
             "packet_size": network_packet_size,
@@ -83,6 +84,15 @@ if st.button("Submit"):
             "attack_detected": None  # This will be predicted
         },
         "browser": browser_type
+    }
+    
+    prediction = PredictionModel(db, "intrusion_logs")
+    probability, detected_anomaly = prediction.predict(document)
+
+    # Add results to document
+    document["prediction"] = {
+        "probability": probability,
+        "detected_anomalies": detected_anomaly
     }
     
     # Store input in MongoDB
